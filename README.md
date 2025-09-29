@@ -1,1 +1,2 @@
 # python-20250929
+export GIT_SSL_NO_VERIFY=true
