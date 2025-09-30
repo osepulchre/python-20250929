@@ -15,13 +15,16 @@ class Pave(Rectangle):
         self.hauteur = hauteur
     
     def perimetre(self) -> int:
-        return 2 * super().perimetre() + 4 * self.hauteur;
+        return 2 * super().perimetre() + 4 * self.hauteur
 
     def surface(self) -> int:
         return 2 * super().surface() + self.hauteur * super().perimetre()
     
+    def volume(self) -> int:
+        return super().surface() * self.hauteur
+    
 
 if __name__ == '__main__':
     pave = Pave(3, 4, 5)
-    print(f"perimetre: {pave.perimetre()}, surface: {pave.surface()}")
+    print(f"perimetre: {pave.perimetre()}, surface: {pave.surface()}, volume: {pave.volume()}")
 
