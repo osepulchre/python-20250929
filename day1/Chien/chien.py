@@ -11,10 +11,14 @@ class Chien:
     def aboyer(self):
         print(f"Wouf Wouf {self.nom}")
         
-    def __str__(self):
-        return self.nom + " est un " + self.race + " de " + self.age + " an(s)"
+    def __repr__(self):
+        return f"{self.nom} est un {self.race} de {self.age} an(s)"
+    
+#    def __str__(self):
+#        return f"x{self.nom}  est un {self.race} de {self.age} an(s)"
         
 toutou = Chien("Miya", 9, "chihuahua")
 toutou.aboyer()
 print(f"{toutou}")
-
+toutous = [toutou, Chien("Pythagore", 2, "beagle")]
+print(f"{toutous}")
