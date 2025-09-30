@@ -30,7 +30,6 @@ while missing_data:
     except InvalidPasswordException as ipe:
         missing_data=True
         print(ipe)
-    print(missing_data)
 
 print(f"login: {login}, password: {password}")
 
