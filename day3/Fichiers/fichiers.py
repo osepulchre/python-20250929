@@ -3,11 +3,10 @@ from collections import Counter
 from threading import Thread
 
 def process_file(file_name:str):
-        print(f"{file_name}: {os.path.getsize(file_path)}")
         with open(file_path, 'rb') as f:
             contenu=f.read()
             compteur = Counter(contenu)
-            print(compteur)
+            print(f"{file_name}: {os.path.getsize(file_path)}: {compteur}")
             f.close()
 
 def process_files():
