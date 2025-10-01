@@ -51,46 +51,46 @@ class Intervalle:
         return Intervalle(self.__borne_inf*other.__borne_inf, self.__borne_sup*other.__borne_sup)
     
     def __and__(self, other):
-        if self.__borne_inf > other.__borne_inf:
-            borne_inf = self.__borne_inf
-        else:
-            borne_inf = other.__borne_inf
-        if self.__borne_sup < other.__borne_sup:
-            borne_sup = self.__borne_sup
-        else:
-            borne_sup = other.__borne_sup
-        if borne_inf <= borne_sup:
-            return Intervalle(borne_inf, borne_sup)
-        return None
+        borne_inf = self.__borne_inf if self.__borne_inf > other.__borne_inf else other.__borne_inf
+        borne_sup = self.__borne_sup if self.__borne_sup < other.__borne_sup else other.__borne_sup
+        return Intervalle(borne_inf, borne_sup) if borne_inf <= borne_sup else None
 
 if __name__ == '__main__':
     try:
         Intervalle("toto", "tata")
     except IntervalError as ie:
-        print(ie)
+        print(f"Intervalle(toto, tata): {ie}")
 
     try:
         Intervalle(-1, 10)
     except IntervalError as ie:
-        print(ie)
+        print(f"Intervalle(-1, 10): {ie}")
 
     try:
         Intervalle(11, 10)
     except IntervalError as ie:
-        print(ie)
+        print(f"Intervalle(11, 10): {ie}")
 
     int1 = Intervalle(3, 7)
-    print(int1.lire_inf())
-    print(int1.lire_sup())
-    print(int1)
+    print(f"{int1} borne inférieure: {int1.lire_inf()}")
+    print(f"{int1} borne supérieure: {int1.lire_sup()}")
 
-    print(int1.__contains__(5))
-    print(int1.__contains__(7))
-    print(int1.__contains__(3))
-    print(int1.__contains__(9))
+    print(f"5 in {int1}: {5 in int1}")
+    print(f"7 in {int1}: {7 in int1}")
+    print(f"3 in {int1}: {3 in int1}")
+    print(f"9 in {int1}: {9 in int1}")
 
     int2 = Intervalle(2,4)
-    print(int1+int2)
-    print(int1-int2)
-    print(int1*int2)
-    print(int1 & int2)
+    print(f"{int1} + {int2}: {(int1+int2)}")
+    print(f"{int1} - {int2}: {(int1-int2)}")
+    try:
+        int2-int1
+    except IntervalError as ie:
+        print(f"{int2} - {int1}: {ie}")
+    
+    print(f"{int1} * {int2}: {(int1*int2)}")
+    print(f"{int1} & {int2}: {(int1&int2)}")
+
+    int3 = Intervalle(1,2)
+    print(f"{int1} & {int3}: {(int1&int3)}")
+
