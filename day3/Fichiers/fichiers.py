@@ -3,11 +3,14 @@ from collections import Counter
 from threading import Thread
 
 def process_file(file_name:str):
-        with open(file_path, 'rb') as f:
+    try:
+        with open(file_name, 'r', encoding='utf-8') as f:
             contenu=f.read()
             compteur = Counter(contenu)
             print(f"{file_name}: {os.path.getsize(file_path)}: {compteur}")
             f.close()
+    except Exception as e:
+        print(f"{file_name}: failed - {e}")
 
 def process_files():
     try:
@@ -30,7 +33,7 @@ for file_name in os.listdir(dir_path):
 print(files)
 
 threads=[]
-nb_threads=10
+nb_threads=4
 for i in range(nb_threads):
     t=Thread(target=process_files)
     threads.append(t)
