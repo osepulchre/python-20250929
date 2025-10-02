@@ -2,28 +2,26 @@ import json, os
 
 file_path="catalogue.json"
 
-if os.path.exists(file_path):
-    with open(file_path, "r") as file:
-        catalogue = json.load(file)
-else:
-    catalogue = {
+catalogue = {
         "produits": [
             {"id": 1, "nom": "Stylo", "prix": 1.8},
             {"id": 2, "nom": "Cahier", "prix": 2.5},
             {"id": 3, "nom": "Sac",   "prix": 19.9}
         ]
     }
-    with open("catalogue.json", "w", encoding="utf-8") as file:
-        json.dump(catalogue, file, indent=2)
 
-prix_total=0
-for produit in catalogue["produits"]:
-    prix_total += produit["prix"]
+with open("catalogue.json", "w", encoding="utf-8") as file:
+    json.dump(catalogue, file, indent=2)
 
-catalogue["total"]=prix_total
+with open(file_path, "r") as file:
+    catalogue2 = json.load(file)
 
-print(json.dumps(catalogue))
+prix_total = sum(produit["prix"] for produit in catalogue["produits"])
+
+catalogue2["total"]=prix_total
+
+print(json.dumps(catalogue2))
 
 with open("catalogue_total.json", "w", encoding="utf-8") as file:
-        json.dump(catalogue, file, indent=2)
+    json.dump(catalogue2, file, indent=2)
 
