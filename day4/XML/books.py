@@ -11,10 +11,5 @@ transformer = etree.XSLT(xslt)
 
 result = transformer(source_xml)
 
-with open(target_file, "wb") as f:
-    f.write(etree.tostring(
-        result,                       
-        pretty_print=True,
-        xml_declaration=True,
-        encoding="UTF-8"
-    ))
+with open(target_file, "w", encoding="utf-8") as f:
+     f.write(str(result))
