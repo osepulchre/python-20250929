@@ -1,4 +1,5 @@
 import threading
+import queue
 import time
 
 class Job:
@@ -20,26 +21,29 @@ class Worker(threading.Thread):
     def run(self):
         try:
             while True:
-                job = self.__jobs.pop(0)
+                job = self.__job_queue.get(timeout=1)
                 print(f"{self}: début {job}")
                 job.perform()
                 print(f"{self}: fin {job}")
-        except IndexError:
+                self.__job_queue.task_done()
+        except queue.Empty:
             print(f"{self}: fin de la journée")
 
-    def start(self, jobs):
-        self.__jobs = jobs
+    def start(self, job_queue):
+        self.__job_queue = job_queue
         super().start()
     
     def __repr__(self):
         return self.__name
 
-jobs = [Job("repassage", 2), Job("vaisselle", 1), Job("cuisine", 2), Job("ménage", 3), Job("jardinage", 4), Job("courses", 2), Job("factures", 1), Job("lavage voiture", 1), Job("tonte gazon", 5)]
+job_queue = queue.Queue()
+for job in [Job("repassage", 2), Job("vaisselle", 1), Job("cuisine", 2), Job("ménage", 3), Job("jardinage", 4), Job("courses", 2), Job("factures", 1), Job("lavage voiture", 1), Job("tonte gazon", 5)]:
+    job_queue.put(job)
 
 workers = [Worker("Marge"), Worker("Omer"), Worker("Bart"), Worker("Lisa"), Worker("Maggie")]
 
 for worker in workers:
-    worker.start(jobs)
+    worker.start(job_queue)
 
 for worker in workers:
     worker.join()
